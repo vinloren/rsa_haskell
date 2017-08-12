@@ -1,5 +1,15 @@
-import System.Random
-import Data.Char
+module RsaKit
+( extEu
+, findEu
+, getQR
+, invM
+, testa
+, testp
+, findC
+, powm
+, findD
+, findPrime
+) where
 
 -- trasforma [] in 0 per lista vuota (è il caso di num primo trovato
 -- altrimenti lascia il resto > 1 che identifica num primo NON trovato
@@ -13,10 +23,6 @@ testa xs = head xs
 -- elevato al quadrato affiché -1 (p-1) diventi 1 e soddisfi x non > 1
 testp :: Integer -> [Integer]
 testp p = [testa [x | b <- [2,3,5,7,11,13,17,19,23,31,37,41,53,61], let x = (powm b (p `div` 2) p 1)^2 `mod` p, x > 1]]
-
-
-findC :: Integer -> Integer
-findC phi = head [x | x <- [17,29,31,53,61,251], (gcd phi x) == 1]
 
 -- calcolo potenza modulare col sistema dei quadrati in sequenza e shift a destra 
 -- dell'esponente ad ogni iterazione   
@@ -39,6 +45,7 @@ findEu a m c = findEu res (snd (res !! 1)) (snd (res !! 0)) where res = (extEu a
 
 getQR :: Integer -> Integer -> (Integer,Integer)
 getQR a b = ((a `div` b),(a `mod` b))
+-- fine gruppo di funzioni
             
 -- trova inverso modulo phi di c (c^1 mod phi) analizzando tuple risultanti da algoritmo 
 -- euclideo applicato a phi e c che danno come MCD 1 finale. I passaggi sono 1 2 o 3 a 
@@ -47,6 +54,9 @@ invM ::  [(Integer,Integer)] -> Integer
 invM a | (length(a)) == 6 = ((-1*fst(a!!4)+(-1)*fst(a!!0)+(-1)*fst(a!!0)*(-1)*fst(a!!2)*(-1)*fst(a!!4)+fst(a!!5))) `mod` (fst(a!!5))
        | (length(a)) == 4 = ((-1*fst(a!!0)*(-1)*fst(a!!2)+1+fst(a!!3))) `mod` (fst(a!!3))
        | otherwise = ((-1*fst(a!!0)+fst(a!!1))) `mod` (fst(a!!1))
+
+findC :: Integer -> Integer
+findC phi = head [x | x <- [17,29,31,53,61,251], (gcd phi x) == 1]
 
 findD :: Integer -> Integer -> Integer
 findD c phi = (invM (findEu [] phi c))
@@ -58,72 +68,3 @@ findPrime p = if (testp p) == [0] then p else findPrime (p+2)
 -- c = esponente di cifratura n. primo piccolo compreso  fra 17 e 251 deve essere coprimo con phi
 -- d = esponente di decifratura = c^-1 mod phi ovvero d*c mod phi = 1
 -- lo si trova con l'algoritmo euclideo esteso qui sopra (modinv / gcdExt)
-
-
-
--- converte Int to Integer e somma a 256*b
-intgr :: Int -> Integer -> Integer
-intgr a b = 256*b+toInteger(a)
-
--- converte input string in Integer da cifrare RSA
-cnvIn :: [Char] -> Integer -> Integer
-cnvIn i n 
-  | i == [] = n
-  | otherwise = (cnvIn (tail(i)) (intgr(ord(head(i))) n))
-
--- converte big Integer in [char]
-cnvOut :: Integer -> [Char] -> [Char]
-cnvOut 0 a = a
-cnvOut n a = cnvOut (n `div` 256) ((chr((fromInteger(n)) `mod` 256)):a)
-
-
- 
-main = do
-  putStrLn "Num bits primo fattore primo?"
-  nb <- getLine
-  let e1 = read(nb)
-  n <- randomRIO(2^e1, 2^(e1+1)-1)
-  let p = if n  `mod` 2 == 1 then n else n + 1
-  let fact1 = findPrime p
-  putStrLn (show fact1)
-  putStrLn "Num bits secondo  fattore primo?"
-  nb <- getLine
-  let e2 = read(nb)
-  n <- randomRIO(2^e2, 2^(e2+1)-1)
-  let p = if n  `mod` 2 == 1 then n else n + 1
-  let fact2 = findPrime p
-  putStrLn (show fact2)
-  let m = (fact1*fact2):[]
-  let phi = lcm (fact1-1) (fact2-1)
-  let y = phi:m
-  let c = findC phi
-  let ce = c:y
-  let d = findD c phi
-  let z = d:ce
-  let labl = ["Decyphexp","Cyphexp","phi","Module"]
-  let rsa = zip labl z
-{--
-  putStrLn "Module ="
-  putStrLn (show m)
-  putStrLn "phi = "
-  putStrLn (show phi)
-  putStrLn "rsa params ="
-  putStrLn (show z)
-  putStrLn (show d)
---}	
-  putStrLn "RSA packet:"
-  print rsa
-  putStrLn "Frase da cifrare?"
-  n <- getLine
-  let num = (cnvIn n 0)
-  let cyph = powm num c (head m) 1
-  putStrLn "Cypher ="
-  putStrLn (show cyph)
-  let decy = powm cyph d (head m) 1
-  putStrLn "Decyph ="
-  putStrLn (show decy)
-  putStrLn (cnvOut decy [])
-  
-  
-  
-  
