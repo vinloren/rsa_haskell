@@ -1,23 +1,6 @@
 import System.Random
-import Data.Char
+import System.IO
 import RsaKit
-
-
--- converte Int to Integer e somma a 256*b
-intgr :: Int -> Integer -> Integer
-intgr a b = 256*b+toInteger(a)
-
--- converte input string in Integer da cifrare RSA
-cnvIn :: [Char] -> Integer -> Integer
-cnvIn i n 
-  | i == [] = n
-  | otherwise = (cnvIn (tail(i)) (intgr(ord(head(i))) n))
-
--- converte big Integer in [char]
-cnvOut :: Integer -> [Char] -> [Char]
-cnvOut 0 a = a
-cnvOut n a = cnvOut (n `div` 256) ((chr((fromInteger(n)) `mod` 256)):a)
-
 
  
 main = do
@@ -37,13 +20,16 @@ main = do
   putStrLn (show fact2)
   let m = (fact1*fact2):[]
   let phi = lcm (fact1-1) (fact2-1)
-  let y = phi:m
   let c = findC phi
-  let ce = c:y
+  let ce = c:m
   let d = findD c phi
   let z = d:ce
-  let labl = ["Decyphexp","Cyphexp","phi","Module"]
-  let rsa = zip labl z
+  let zz = (e1+e2):z
+  let labl = ["Bits","Decyphexp","Cyphexp","Module"]
+  let rsa = zip labl zz
+-- salva pubkey (bits,Cyphexp,Module) in 'pubkey.rsa' e privkey (Bits,Decyphexp,module) in 'privkey.rsa'
+  writeFile "./pubkey.rsa" ((show(e1+e2))++"\n"++(show(c))++"\n"++(show(head(m))++"\n"))
+  writeFile "./privkey.rsa" ((show(e1+e2))++"\n"++(show(d))++"\n"++(show(head(m))++"\n"))
   putStrLn "RSA packet:"
   print rsa
   putStrLn "Frase da cifrare?"

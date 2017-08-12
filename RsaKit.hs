@@ -9,7 +9,12 @@ module RsaKit
 , powm
 , findD
 , findPrime
+, intgr
+, cnvIn
+, cnvOut
 ) where
+
+import Data.Char
 
 -- trasforma [] in 0 per lista vuota (è il caso di num primo trovato
 -- altrimenti lascia il resto > 1 che identifica num primo NON trovato
@@ -68,3 +73,18 @@ findPrime p = if (testp p) == [0] then p else findPrime (p+2)
 -- c = esponente di cifratura n. primo piccolo compreso  fra 17 e 251 deve essere coprimo con phi
 -- d = esponente di decifratura = c^-1 mod phi ovvero d*c mod phi = 1
 -- lo si trova con l'algoritmo euclideo esteso qui sopra (modinv / gcdExt)
+
+-- converte Int to Integer e somma a 256*b
+intgr :: Int -> Integer -> Integer
+intgr a b = 256*b+toInteger(a)
+
+-- converte input string in Integer da cifrare RSA
+cnvIn :: [Char] -> Integer -> Integer
+cnvIn i n 
+  | i == [] = n
+  | otherwise = (cnvIn (tail(i)) (intgr(ord(head(i))) n))
+
+-- converte big Integer in [char] per ottenere input originale
+cnvOut :: Integer -> [Char] -> [Char]
+cnvOut 0 a = a
+cnvOut n a = cnvOut (n `div` 256) ((chr((fromInteger(n)) `mod` 256)):a)
