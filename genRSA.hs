@@ -28,13 +28,14 @@ main = do
   let labl = ["Bits","Decyphexp","Cyphexp","Module"]
   let rsa = zip labl zz
 -- salva pubkey (bits,Cyphexp,Module) in 'pubkey.rsa' e privkey (Bits,Decyphexp,module) in 'privkey.rsa'
-  writeFile "./pubkey.rsa" ((show(e1+e2))++"\n"++(show(c))++"\n"++(show(head(m))++"\n"))
-  writeFile "./privkey.rsa" ((show(e1+e2))++"\n"++(show(d))++"\n"++(show(head(m))++"\n"))
+  writeFile "./pubkey.rsa" ((show(e1+e2))++"\n"++(show(c))++"\n"++(show(fact1*fact2)++"\n"))
+  writeFile "./privkey.rsa" ((show(e1+e2))++"\n"++(show(d))++"\n"++(show(fact1*fact2)++"\n"))
   putStrLn "RSA packet:"
   print rsa
   putStrLn "Frase da cifrare?"
   n <- getLine
   let num = (cnvIn n 0)
+  putStrLn (show(num))
   let cyph = powm num c (head m) 1
   putStrLn "Cypher ="
   putStrLn (show cyph)
