@@ -7,6 +7,7 @@ module RsaKit
 , cnvOut
 , invM
 , findEu
+, getBlocks
 ) where
 
 import Data.Char
@@ -49,15 +50,15 @@ getQR :: Integer -> Integer -> (Integer,Integer)
 getQR a b = ((a `div` b),(a `mod` b))
             
 -- trova inverso modulo phi di c (c^1 mod phi) analizzando tuple risultanti da algoritmo 
--- euclideo applicato a phi e c che danno come MCD 1 finale. I passaggi sono 1 2 o 3 a 
--- seconda di phi e c ovvero 2 4 6 o 8tuple (coppie) di valori
+-- euclideo applicato a phi e c che danno come MCD 1 finale. La lista di coppie (q,r),(D,d)
+-- viene analizzata a ritroso a partire da ultima equazione che riporta phi,c riducendo
+-- via via le stesse fino a d arrivare alla soluzione c * c^-1 = 1 (c^-1 = exp decifratura)
+-- La scansione termina quando il puntatore l arriva a 0 e appare il risultato
 invM ::  [(Integer,Integer)] -> Int -> Integer -> Integer -> Integer
 invM a l r0 r1
     | l == (length(a)) = (invM a (l-4) (-(fst(a!!(l-2)))*(-1)*(fst((a!!(l-4))))+1) (-(fst(a!!(l-2))))) 
     | l == 0 = ((r0 + (fst(a!!(length(a)-1)))) `mod` ((fst(a!!(length(a)-1)))))
     | otherwise = (invM a (l-2) (-(fst(a!!(l-2)))*r0+r1) r0)
-    
-     
 -- fine gruppo di funzioni
 
 -- trova 'x' che sia coprimo con phi. Esso diventa esponente di cifratura 'c'; solitamente 17 è ok altrimenti
@@ -91,3 +92,9 @@ cnvIn i n
 cnvOut :: Integer -> [Char] -> [Char]
 cnvOut 0 a = a
 cnvOut n a = cnvOut (n `div` 256) ((chr((fromInteger(n)) `mod` 256)):a)
+
+getBlocks :: [String] -> String -> String-> Int -> [String]
+getBlocks ar s contents l 
+  | (length(contents)) == 0 = tail(ar)++(s:[])
+  | (length(s)) == l = (getBlocks (ar++(s:[])) "" contents l)
+  | otherwise = (getBlocks ar (s++(head(contents):[])) (tail(contents))  l)
