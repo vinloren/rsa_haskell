@@ -12,8 +12,10 @@ past using C and MPIR libraries.
 
 ## The project
 The project consists in three source files:
-. RsaKit.hs
-. genRSA.hs
-. criFile.hs
+
+1) RsaKit.hs
+2) genRSA.hs
+3) criFile.hs
+
 
 
