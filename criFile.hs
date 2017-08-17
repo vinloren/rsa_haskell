@@ -16,10 +16,12 @@ main = do
   progName <- getProgName
   if (length(args) < 4)
     then
-      putStrLn "You must suppply 3 filenames: input, pubkey/privkey, output plus action crypt/decry"
-    else if (args!!3) == "crypt" 
+      putStrLn "You must suppply 3 filenames: input,pubkey/privkey,output plus action cipher/deciph"
+    else if (args!!3) == "cipher" 
            then crypt args
-           else decrypt args
+           else if (args!!3) == "deciph" 
+                   then decrypt args
+                   else putStrLn "You must pecify \"cipher\" or \"deciph\""
            
 decrypt args = do
   putStrLn ("Input, key, output:\n"++(args!!0)++","++(args!!1)++","++(args!!2)++"\n") 
