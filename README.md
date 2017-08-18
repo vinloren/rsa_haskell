@@ -58,11 +58,14 @@ Actually this is done in genRSA.hs since it is there the only place where phi is
 In is not eventually used anymore once 'c' and 'd' are found. The <b>let phi = lcm (fact1-1) (fact2-1)</b> is simple as such since Haskell already supplies the lcm function natively.
 
 ### 3 Choosing a 'cipher exponent' 
-Any small prime can be chosen as cipher exponent provided it is coprime with 'phi'.<br>
--- find 'x' being coprime with phi. It will become cipher exponent 'c'. A small list of primes suffices 
-since one of them will be surely found to satisfy the condition in the list comprehension<br>
+Any small prime can be chosen as cipher exponent provided it is coprime with 'phi'. To find 'x' being coprime with phi to become cipher exponent 'c', a small list of primes suffices 
+since one of them will be surely found to satisfy the condition in the list comprehension.<br>
 <b>findC :: Integer -> Integer<br>
 findC phi = head [x | x <- [17,29,31,53,61,251], (gcd phi x) == 1]</b><br>
 
+### 4 Finding decipher exponent
+The most challenging task here is to find c^-1 mod phi. There are different possibilities to achieve this 
+from the brute force scan of multipliers [2,3..] until (d*c) mod phi = 1 (impractical being too slow) or something 
+more clever such as the euclidean extended algorithm applied here.
 
 
