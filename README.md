@@ -115,14 +115,21 @@ be omitted because all the calculation are 'mod phi' and phi mod phi is = 0. Tha
 Then:
 <table>
 <tr><td>n0=</td><td>(-q0) * n1 + n2</td></tr>
-<tr><td>n1=</td><td>(-q1) * (-q2) * (-q3) + q3</td></tr>
+<tr><td>n1=</td><td>(-q1) * (-q2) * (-q3) - q1 + q3</td></tr>
 <tr><td>n2=</td><td>(-q2) * (-q3) + 1</td></tr>
 </table>
 
 And finally:
 <table>
-<tr><td>n0=</td><td>(-q0) * (-q1) * (-q2) * (-q3) + (-q2) * (-q3) + 1</td></tr>
+<tr><td>n0=</td><td>(-q0) * (-q1) * (-q2) * (-q3) + (-q0) * (q1) + (-q0) * (-q3) + 51</td></tr>
 </table>
+
+Substituting the values to the labels we have:<br>
+(-2) * (-1) * (-1) * (-50) + (-2) * (-1) + (-2) * (-50) + 49 =<br> 
+100 + 2 + 100 + 51 = 253 mod 860<br>
+so 17^-1 mod 860 = 253 since (17*253) mod 860 = 1
+
+
 
 
 
