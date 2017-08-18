@@ -36,25 +36,25 @@ powm b e m r = powm (b * b `mod` m) (e `div` 2) m r
 
 
 -- Le 4 funzioni per trovare d = c^-1 mod phi (ovvero esponente di decifratura 'd' dato 'c' e 'phi')
--- col sistema algoritmo euclideo esteso
+-- Extended euclidean algorithm. The result is a list of couples (q,r),(d,D) from (q,1),(D,d) up 
+-- to (q,r),(phi,c)
 extEu :: [(Integer,Integer)] -> Integer -> Integer -> [(Integer,Integer)]
 extEu a m c = ((getQR m c):(m,c):a) 
 
--- ottieni la lista dei divisori / dividendi / resti della serie algoritmo euclideo MCD
+-- Get the list of divisors / dividends / remainder of the eucliden gcd algorithm
 findEu :: [(Integer,Integer)] -> Integer -> Integer ->  [(Integer,Integer)]
 findEu a _ 0 = [(0,0)]
 findEu a _ 1 = a
 findEu a m c = findEu res (snd (res !! 1)) (snd (res !! 0)) where res = (extEu a m c)
 
--- ottieni quoziente e resto di a / b
+-- Get quotient and remainder of a / b
 getQR :: Integer -> Integer -> (Integer,Integer)
 getQR a b = ((a `div` b),(a `mod` b))
             
--- trova inverso modulo phi di c (c^1 mod phi) analizzando tuple risultanti da algoritmo 
--- euclideo applicato a phi e c che danno come MCD 1 finale. La lista di coppie (q,r),(D,d)
--- viene analizzata a ritroso a partire da ultima equazione che riporta phi,c riducendo
--- via via le stesse fino a d arrivare alla soluzione c * c^-1 = 1 (c^-1 = exp decifratura)
--- La scansione termina quando il puntatore l arriva a 0 e appare il risultato
+-- Find out module inverse c of phi (c^-1 mod phi) analyzing the resulting couples in list a gotten  
+-- from findEu applied to phi and c . The list of couples (q,r),(D,d) is scanned backwards from 
+-- the last two double couples starting from the last equation that includes phi,c. The reduction 
+-- works step by step until the list is void in which case we got the solution c*c^-1 = 1 (c^-1 = decipher exp)
 invM ::  [(Integer,Integer)] -> Int -> Integer -> Integer -> Integer
 invM a l r0 r1
     | l == (length(a)) = (invM a (l-4) (-(fst(a!!(l-2)))*(-1)*(fst((a!!(l-4))))+1) (-(fst(a!!(l-2))))) 
