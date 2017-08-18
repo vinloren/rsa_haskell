@@ -12,21 +12,22 @@ module RsaKit
 
 import Data.Char
 
--- trasforma [] in 0 per lista vuota (è il caso di num primo trovato
--- altrimenti lascia il resto > 1 che identifica num primo NON trovato
+
+-- test if the result from testp was empty list in which case return 0, else head[xs]
 testa :: [Integer] -> Integer
 testa []     = 0
 testa xs = head xs
 
--- trova primi usando teorema di eulero p^(n-1)/2 mode p = 1/-1 se p e n primi
--- se p è primo passa il test su tutta la lista 2..61 ritornando [] altrimenti
--- la scansione termina non appena p^(n-1)/2 mode p != 1/-1. Il risultato è 
--- elevato al quadrato affiché -1 (p-1) diventi 1 e soddisfi x non > 1
+-- find prime number by using euler n^(p-1)/2 mod p = 1/-1 being n prime coprime with p
+-- if p is actually prime then the test has passed on the full list of 'n's returning []
+-- the result of n^(p-1)/2 mod p is squared to ensure a positive 1 given back so that
+-- the condition x > 1 in the conditional list comprehension is valid also for -1^2 
 testp :: Integer -> [Integer]
 testp p = [testa [x | b <- [2,3,5,7,11,13,17,19,23,31,37,41,53,61], let x = (powm b (p `div` 2) p 1)^2 `mod` p, x > 1]]
 
--- calcolo potenza modulare col sistema dei quadrati in sequenza e shift a destra 
--- dell'esponente ad ogni iterazione   
+-- compute modular power by using the quadratic sequence based on the least significant bit
+-- of the exponent. If 0 accumulate b*b in b, if 1 accumulate b*r in r. The exp. 'e' is 
+-- right shifted at each iteraction until it reaches 0 where the resul r is given back. 
 powm :: Integer -> Integer -> Integer -> Integer -> Integer
 powm b 0 m r = r
 powm b e m r
@@ -70,6 +71,8 @@ findC phi = head [x | x <- [17,29,31,53,61,251], (gcd phi x) == 1]
 findD :: Integer -> Integer -> Integer
 findD c phi = invM res (length(res)) 1 1 where res = (findEu [] phi c)
 
+-- if testp passes then give back prime p else try again with p+2
+-- p is a random odd number picked up by genRSA.hs randomRIO function
 findPrime p = if (testp p) == [0] then p else findPrime (p+2)
 
 -- M = p1 * p2
