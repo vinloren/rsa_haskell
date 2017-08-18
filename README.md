@@ -1,5 +1,5 @@
 ## My implementation of RSA developed in haskell
-I have recently coma across with Haskell language (even though it was born in 1998, I never had the chanche to know of it before) and 
+I have recently come across with Haskell language (even though it was born in 1998, I never had the chanche to know of it before) and 
 was impressed by the completely new approach to programming it implements which is "functional descriptive" rather than "imperative" as 
 C C++ Java Python Perl Ruby and many others are.
 
@@ -65,7 +65,38 @@ findC phi = head [x | x <- [17,29,31,53,61,251], (gcd phi x) == 1]</b><br>
 
 ### 4 Finding decipher exponent
 The most challenging task here is to find c^-1 mod phi. There are different possibilities to achieve this 
-from the brute force scan of multipliers [2,3..] until (d*c) mod phi = 1 (impractical being too slow) or something 
-more clever such as the euclidean extended algorithm applied here.
+spanning from brute force scan of multipliers [2,3..] until (d*c) mod phi = 1 (impractical being too slow) to 
+c^(euler's totient -1) mod phi (too much complicated) or, better, to the use of the euclidean extended 
+algorithm applied here.
+
+Let's state that c^-1 * c mod phi = 1 mod phi, let't put c = 17 and phi = 860 to find d = 17^-1 mod 860.<br>
+The extended euclidean algorithm works as it does to find the gcd between c and phi which we already know is = 1 
+since c and phi are coprimes:<br>
+0) 860 / 17 = 50 + 10<br>
+1) 17 / 10 = 1 + 7<br>
+2) 10 / 7 = 1 + 3<br>
+3) 7 / 3 = 2 + 1 <code>   here we can stop since gcd has been found to be = 1</code>
+
+We can now rewrite these 4 equations from the remainder perspective in reverse order:<br>
+<table>
+<tr><th> n </th><th> r </th><th> q </th><th> d </th><th> D </th></tr>
+<tr><td> 0 </td><td> 1 </td><td> (-2) </td><td> 3 </td><td> 7 </td></tr>
+<tr><td> 1 </td><td> 3 </td><td> (-1) </td><td> 7 </td><td>10 </td></tr>
+<tr><td> 2 </td><td> 7 </td><td> (-1) </td><td> 7 </td><td>17 </td></tr>
+<tr><td> 3 </td><td>10 </td><td>(-50) </td><td>17 </td><td>860</td></tr>
+</table>
+
+0) 1 = (-2) * 3 + 7
+1) 3 = (-1) * 7 + 10<br>
+2) 7 = (-1) * 7 + 17<br>
+3) 10 = (-50) * 17 + 860<br>
+
+Now we have to scan backwards these equations aiming to get a single final equation from which the value of 17^-1 
+mod 860 can be extracted.
+
+The first two equation having 
+
+
+
 
 
