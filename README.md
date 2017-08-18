@@ -49,14 +49,13 @@ This function will be used also to find c and d exponents and to cipher / deciph
 <b>powm :: Integer -> Integer -> Integer -> Integer -> Integer<br>
 powm b 0 m r = r<br>
 powm b e m r<br>
-<code>nbsp;nbsp;</code> | e `mod` 2 == 1 = powm (b * b `mod` m) (e `div` 2) m (r * b `mod` m)<br>
+<code>  </code> | e `mod` 2 == 1 = powm (b * b `mod` m) (e `div` 2) m (r * b `mod` m)<br>
 powm b e m r = powm (b * b `mod` m) (e `div` 2) m r<br></b>
 
 
 ### 2 Finding phi
 Actually this is done in genRSA.hs since it is there the only place where phi is required. 
-In is not eventually used anymore once 'c' and 'd' are found. The <b>'let phi = lcm (fact1-1) (fact2-1)'</b>  
-is simple as such since Haskell already supplies the lcm function natively.
+In is not eventually used anymore once 'c' and 'd' are found. The <b>let phi = lcm (fact1-1) (fact2-1)</b> is simple as such since Haskell already supplies the lcm function natively.
 
 ### 3 Choosing a 'cipher exponent' 
 Any small prime can be chosen as cipher exponent provided it is coprime with 'phi'.<br>
