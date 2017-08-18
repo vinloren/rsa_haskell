@@ -17,5 +17,17 @@ The project consists in three source files:
 2) genRSA.hs
 3) criFile.hs
 
+## RsaKit.hs
 
+This files contains all the functions required by genRSA.hs and crifiles.hs. Most of the functions have to do with the tasks required to build 
+a RSA framework:
 
+1) finding a couple of (big) primes p,q to build the RSA 'Module' = p*q
+2) finding 'phi' = lcm (p-1,q-1) to be used eventually to find out 'd' as 'decipher exponent'
+3) choosing a 'cipher exponent' 'c' from a list of small primes checking 'c' is 'coprime' with 'phi' (gcd (c,phi = 1))
+4) finding decipher exponent 'd'= c^1 mod phi (d = inverse module of 'c')
+
+### 1 findig (big) primes
+
+This is achieved by
+ 
