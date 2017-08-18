@@ -146,9 +146,8 @@ findEu a m c = findEu res (snd (res !! 1)) (snd (res !! 0)) where res = (extEu a
 getQR :: Integer -> Integer -> (Integer,Integer)<br>
 getQR a b = ((a `div` b),(a `mod` b))<br>
             
--- Find out module inverse c of phi (c^-1 mod phi) analyzing the resulting couples in list a  
-gotten from findEu applied to phi and c . The list of couples (q,r),(D,d) is scanned backwards 
-from the last two double couples starting from the last equation that includes phi,c. The reduction 
+-- Find out module inverse c of phi (c^-1 mod phi) analyzing the resulting couples in list a gotten from findEu applied to phi and c. 
+The list of couples (q,r),(D,d) is scanned backwards from the last two double couples starting from the last equation that includes phi,c. The reduction 
 works step by step until the list is void in which case we got the solution c * c^-1 = 1 (c^-1 = decipher exp)<br>
 invM ::  [(Integer,Integer)] -> Int -> Integer -> Integer -> Integer
 invM a l r0 r1
