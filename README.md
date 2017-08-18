@@ -90,18 +90,42 @@ We can now rewrite these 4 equations from the remainder perspective in reverse o
 </table>
 
 If we watch the sequence of these equation we can detect a pattern useful to solve the reduction of the entire 
-list to one single row. Lwt' then write a new table substituting the values with labels (c = 17, phi=860):
+list to one single row. Let's then write a new table substituting the values with labels (c = 17, phi=860):
 
 <table>
 <tr><td>n0=</td><td>(-q0)*n1 + n2</td></tr>
 <tr><td>n1=</td><td>(-q1)*n2 + n3</td></tr>
 <tr><td>n2=</td><td>(-q2)*n3 + c</td></tr>
 <tr><td>n3=</td><td>(-q3)*c + phi</td></tr>
+</table>
 
-Now we have to scan backwards these equations aiming to get a single final equation from which the value of 17^-1 
+Now we have to scan backwards these equations, starting with the last one, aiming to get a single final equation from which the value of 17^-1 
 mod 860 can be extracted.
 
-The first two equation having 
+In equation n3 and n2 we have to consider just the multipliers of 'c' (-q3) in n3 and 1 in n2 since phi can 
+be omitted because all the calculation are 'mod phi' and phi mod phi is = 0. That said we can rewrite:
+
+<table>
+<tr><td>n0=</td><td>(-q0)*n1 + n2</td></tr>
+<tr><td>n1=</td><td>(-q1)*n2 + n3</td></tr>
+<tr><td>n2=</td><td>(-q2)*(-q3) + 1</td></tr>
+<tr><td>n3=</td><td>(-q3)</td></tr>
+</table>
+
+Then:
+<table>
+<tr><td>n0=</td><td>(-q0) * n1 + n2</td></tr>
+<tr><td>n1=</td><td>(-q1) * (-q2) * (-q3) + q3</td></tr>
+<tr><td>n2=</td><td>(-q2) * (-q3) + 1</td></tr>
+</table>
+
+And finally:
+<table>
+<tr><td>n0=</td><td>(-q0) * (-q1) * (-q2) * (-q3) + (-q2) * (-q3) + 1</td></tr>
+</table>
+
+
+
 
 
 
