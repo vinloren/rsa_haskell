@@ -77,17 +77,26 @@ since c and phi are coprimes:<br>
 <tr><td>1</td><td> 17 / 10</td><td>= 1 + 7</td></tr>
 <tr><td>2</td><td> 10 / 7</td><td>= 1 + 3</td></tr>
 <tr><td>3</td><td> 7 / 3</td><td>= 2 + 1</td></tr> 
-</table><br>
+</table>
 here we can stop since gcd has been found to be = 1
 
 We can now rewrite these 4 equations from the remainder perspective in reverse order:<br>
 <table>
-<tr><th> n </th><th> r </th><th>  q</th><th> d </th><th> D </th></tr>
-<tr><td> 0 </td><td> 1 </td><td> (-2) </td><td> 3 </td><td> 7 </td></tr>
-<tr><td> 1 </td><td> 3 </td><td> (-1) </td><td> 7 </td><td>10 </td></tr>
-<tr><td> 2 </td><td> 7 </td><td> (-1) </td><td> 7 </td><td>17 </td></tr>
+<tr><th> n </th><th> r </th><th>  q</th><th> d </th><th>D </th></tr>
+<tr><td> 0 </td><td> 1 </td><td> (-2) </td><td> 3 </td><td>  7</td></tr>
+<tr><td> 1 </td><td> 3 </td><td> (-1) </td><td> 7 </td><td> 10</td></tr>
+<tr><td> 2 </td><td> 7 </td><td> (-1) </td><td> 7 </td><td> 17</td></tr>
 <tr><td> 3 </td><td>10 </td><td>(-50) </td><td>17 </td><td>860</td></tr>
 </table>
+
+If we watch the sequence of these equation we can detect a pattern useful to solve the reduction of the entire 
+list to one single row. Lwt' then write a new table substituting the values with labels (c = 17, phi=860):
+
+<table>
+<tr><td>n0=</td><td>(-q0)*n1 + n2</td></tr>
+<tr><td>n1=</td><td>(-q1)*n2 + n3</td></tr>
+<tr><td>n2=</td><td>(-q2)*n3 + c</td></tr>
+<tr><td>n3=</td><td>(-q3)*c + phi</td></tr>
 
 Now we have to scan backwards these equations aiming to get a single final equation from which the value of 17^-1 
 mod 860 can be extracted.
