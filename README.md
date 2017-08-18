@@ -128,32 +128,32 @@ And finally:
 (-2) * (-1) * (-1) * (-50) + (-2) * (-1) + (-2) * (-50) + 49 =<br> 
 100 + 2 + 100 + 51 = <br>
 (253 + 860) mod 860 = 253 (summed result to module since it may be negative)<br>
-so 17^-1 mod 860 = 253 since (17*253) mod 860 = 1
+<b>so 17^-1 mod 860 = 253 since (17*253) mod 860 = 1</b>
 
 The relevant functions in RsaKit.hs to manage all that was explained above are:<br>
 -- Extended euclidean algorithm. The result is a list of couples (q,r),(d,D) from (q,1),(D,d) up to 
 (q,r),(phi,c)<br>
-extEu :: [(Integer,Integer)] -> Integer -> Integer -> [(Integer,Integer)]<br>
-extEu a m c = ((getQR m c):(m,c):a)<br>
+<b>extEu :: [(Integer,Integer)] -> Integer -> Integer -> [(Integer,Integer)]<br>
+extEu a m c = ((getQR m c):(m,c):a)</b><br>
 
 -- Get the list of divisors / dividends / remainder of the eucliden gcd algorithm<br>
-findEu :: [(Integer,Integer)] -> Integer -> Integer ->  [(Integer,Integer)]<br>
+<b>findEu :: [(Integer,Integer)] -> Integer -> Integer ->  [(Integer,Integer)]<br>
 findEu a _ 0 = [(0,0)]<br>
 findEu a _ 1 = a<br>
-findEu a m c = findEu res (snd (res !! 1)) (snd (res !! 0)) where res = (extEu a m c)<br>
+findEu a m c = findEu res (snd (res !! 1)) (snd (res !! 0)) where res = (extEu a m c)</b><br>
 
 -- Get quotient and remainder of a / b<br>
-getQR :: Integer -> Integer -> (Integer,Integer)<br>
-getQR a b = ((a `div` b),(a `mod` b))<br>
+<b>getQR :: Integer -> Integer -> (Integer,Integer)<br>
+getQR a b = ((a `div` b),(a `mod` b))</b><br>
             
 -- Find out module inverse c of phi (c^-1 mod phi) analyzing the resulting couples in list a gotten from findEu applied to phi and c. 
 The list of couples (q,r),(D,d) is scanned backwards from the last two double couples starting from the last equation that includes phi,c. The reduction 
 works step by step until the list is void in which case we got the solution c * c^-1 = 1 (c^-1 = decipher exp)<br>
-invM ::  [(Integer,Integer)] -> Int -> Integer -> Integer -> Integer
+<b>invM ::  [(Integer,Integer)] -> Int -> Integer -> Integer -> Integer
 invM a l r0 r1
 <code>    </code> | l == (length(a)) = (invM a (l-4) (-(fst(a!!(l-2))) * (-1) * (fst((a!!(l-4))))+1) (-(fst(a!!(l-2))))) 
 <code>    </code> | l == 0 = ((r0 + (fst(a!!(length(a)-1)))) `mod` ((fst(a!!(length(a)-1)))))
-<code>    </code> | otherwise = (invM a (l-2) (-(fst(a!!(l-2)))*r0+r1) r0)
+<code>    </code> | otherwise = (invM a (l-2) (-(fst(a!!(l-2)))*r0+r1) r0)</b>
 
 
 
