@@ -62,8 +62,8 @@ invM a l r0 r1
     | otherwise = (invM a (l-2) (-(fst(a!!(l-2)))*r0+r1) r0)
 -- fine gruppo di funzioni
 
--- trova 'x' che sia coprimo con phi. Esso diventa esponente di cifratura 'c'; solitamente 17 è ok altrimenti
--- potrà essere altro in elenco qui sotto
+-- find 'x' being coprime with phi. It will become cipher exponent 'c'. A small list of primes suffices 
+-- since one of them will be surely found to satisfy the condition in the list comprehension
 findC :: Integer -> Integer
 findC phi = head [x | x <- [17,29,31,53,61,251], (gcd phi x) == 1]
 

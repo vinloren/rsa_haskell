@@ -26,32 +26,44 @@ a RSA framework:
 3) choosing a 'cipher exponent' 'c' from a list of small primes checking 'c' is 'coprime' with 'phi' (gcd (c,phi = 1))
 4) finding decipher exponent 'd'= c^1 mod phi (d = inverse module of 'c')
 
-### 1 finding (big) primes
+### 1 Finding (big) primes
 This is achieved by findPrime, testp, testa, powm:
 
--- if testp passes then give back prime p else try again with p+2. p is a random odd number picked up by genRSA.hs randomRIO function
-
+-- if testp passes then give back prime p else try again with p+2. p is a random odd number picked up by genRSA.hs randomRIO function<br>
 findPrime p = if (testp p) == 0 then p else findPrime (p+2)
 
--- test if the result from testp was empty list in which case return 0, else head[xs]
-
+-- test if the result from testp was empty list in which case return 0, else head[xs]<br>
 testa :: [Integer] -> Integer<br>
 testa []     = 0<br>
 testa xs = head xs<br>
 
 -- find prime number by using euler n^(p-1)/2 mod p = 1/-1 being n prime coprime with p. If p is actually prime then the test has passed on the full list of 'n's returning 
-the result of n^(p-1)/2 mod p is squared to ensure a positive 1 given back so that the condition x > 1 in the conditional list comprehension is valid also for -1^2 
+the result of n^(p-1)/2 mod p is squared to ensure a positive 1 given back so that the condition x > 1 in the conditional list comprehension<br> is valid also for -1^2<br>
+testp :: Integer -> [Integer]<br>
+testp p = [testa [x | b <- [2,3,5,7,11,13,17,19,23,31,37,41,53,61], let x = (powm b (p `div` 2) p 1)^2 `mod` p, x > 1]]<br>
 
-testp :: Integer -> [Integer]
-testp p = [testa [x | b <- [2,3,5,7,11,13,17,19,23,31,37,41,53,61], let x = (powm b (p `div` 2) p 1)^2 `mod` p, x > 1]]
+-- compute modular power by using the quadratic sequence based on the least significant bit 
+of the exponent. If 0 accumulate b*b in b, if 1 accumulate b*r in r. The exp. 'e' is 
+right shifted at each iteraction until it reaches 0 where the resul r is given back. 
+This function will be used also to find c and d exponents and to cipher / decipher.<br>
+powm :: Integer -> Integer -> Integer -> Integer -> Integer<br>
+powm b 0 m r = r<br>
+powm b e m r<br>
+  | e `mod` 2 == 1 = powm (b * b `mod` m) (e `div` 2) m (r * b `mod` m)<br>
+powm b e m r = powm (b * b `mod` m) (e `div` 2) m r<br>
 
--- compute modular power by using the quadratic sequence based on the least significant bit
--- of the exponent. If 0 accumulate b*b in b, if 1 accumulate b*r in r. The exp. 'e' is 
--- right shifted at each iteraction until it reaches 0 where the resul r is given back.
--- This function will be used also to find c and d exponents and to cipher / decipher.
-powm :: Integer -> Integer -> Integer -> Integer -> Integer
-powm b 0 m r = r
-powm b e m r
-  | e `mod` 2 == 1 = powm (b * b `mod` m) (e `div` 2) m (r * b `mod` m)
-powm b e m r = powm (b * b `mod` m) (e `div` 2) m r
+
+### 2 Finding phi
+Actually this is done in genRSA.hs since it is there the only place where phi is required. 
+In is not eventually used anymore once 'c' and 'd' are found. The 'let phi = lcm (fact1-1) (fact2-1)'  
+is simple as such since Haskell already supplies the lcm function natively.
+
+### 3 Choosing a 'cipher exponent' 
+Any small prime can be chosen as cipher exponent provided it is coprime with 'phi'.<br>
+-- find 'x' being coprime with phi. It will become cipher exponent 'c'. A small list of primes suffices 
+since one of them will be surely found to satisfy the condition in the list comprehension<br>
+findC :: Integer -> Integer<br>
+findC phi = head [x | x <- [17,29,31,53,61,251], (gcd phi x) == 1]<br>
+
+
 
