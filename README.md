@@ -29,19 +29,19 @@ a RSA framework:
 ### 1 finding (big) primes
 This is achieved by findPrime, testp, testa, powm:
 
--- if testp passes then give back prime p else try again with p+2
--- p is a random odd number picked up by genRSA.hs randomRIO function
+-- if testp passes then give back prime p else try again with p+2. p is a random odd number picked up by genRSA.hs randomRIO function
+
 findPrime p = if (testp p) == 0 then p else findPrime (p+2)
 
 -- test if the result from testp was empty list in which case return 0, else head[xs]
-testa :: [Integer] -> Integer
-testa []     = 0
-testa xs = head xs
 
--- find prime number by using euler n^(p-1)/2 mod p = 1/-1 being n prime coprime with p
--- if p is actually prime then the test has passed on the full list of 'n's returning []
--- the result of n^(p-1)/2 mod p is squared to ensure a positive 1 given back so that
--- the condition x > 1 in the conditional list comprehension is valid also for -1^2 
+testa :: [Integer] -> Integer<br>
+testa []     = 0<br>
+testa xs = head xs<br>
+
+-- find prime number by using euler n^(p-1)/2 mod p = 1/-1 being n prime coprime with p. If p is actually prime then the test has passed on the full list of 'n's returning 
+the result of n^(p-1)/2 mod p is squared to ensure a positive 1 given back so that the condition x > 1 in the conditional list comprehension is valid also for -1^2 
+
 testp :: Integer -> [Integer]
 testp p = [testa [x | b <- [2,3,5,7,11,13,17,19,23,31,37,41,53,61], let x = (powm b (p `div` 2) p 1)^2 `mod` p, x > 1]]
 
