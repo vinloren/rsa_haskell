@@ -149,11 +149,11 @@ getQR a b = ((a `div` b),(a `mod` b))</b><br>
 -- Find out module inverse c of phi (c^-1 mod phi) analyzing the resulting couples in list a gotten from findEu applied to phi and c. 
 The list of couples (q,r),(D,d) is scanned backwards from the last two double couples starting from the last equation that includes phi,c. The reduction 
 works step by step until the list is void in which case we got the solution c * c^-1 = 1 (c^-1 = decipher exp)<br>
-<b>invM ::  [(Integer,Integer)] -> Int -> Integer -> Integer -> Integer
-invM a l r0 r1
-<code>    </code> | l == (length(a)) = (invM a (l-4) (-(fst(a!!(l-2))) * (-1) * (fst((a!!(l-4))))+1) (-(fst(a!!(l-2))))) 
-<code>    </code> | l == 0 = ((r0 + (fst(a!!(length(a)-1)))) `mod` ((fst(a!!(length(a)-1)))))
-<code>    </code> | otherwise = (invM a (l-2) (-(fst(a!!(l-2)))*r0+r1) r0)</b>
+<b>invM ::  [(Integer,Integer)] -> Int -> Integer -> Integer -> Integer<br>
+invM a l r0 r1<br>
+<code>    </code> | l == (length(a)) = (invM a (l-4) (-(fst(a!!(l-2))) * (-1) * (fst((a!!(l-4))))+1) (-(fst(a!!(l-2)))))<br>
+<code>    </code> | l == 0 = ((r0 + (fst(a!!(length(a)-1)))) `mod` ((fst(a!!(length(a)-1)))))<br>
+<code>    </code> | otherwise = (invM a (l-2) (-(fst(a!!(l-2)))*r0+r1) r0)<br></b>
 
 
 
