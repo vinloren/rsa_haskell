@@ -38,19 +38,19 @@ testa []     = 0<br>
 testa xs = head xs<br>
 
 -- find prime number by using euler n^(p-1)/2 mod p = 1/-1 being n prime coprime with p. If p is actually prime then the test has passed on the full list of 'n's returning 
-the result of n^(p-1)/2 mod p is squared to ensure a positive 1 given back so that the condition x > 1 in the conditional list comprehension<br> is valid also for -1^2<br>
+the result of n^(p-1)/2 mod p is squared to ensure a positive 1 given back so that the condition x > 1 in the conditional list comprehension is valid also for -1^2<br>
 testp :: Integer -> [Integer]<br>
 testp p = [testa [x | b <- [2,3,5,7,11,13,17,19,23,31,37,41,53,61], let x = (powm b (p `div` 2) p 1)^2 `mod` p, x > 1]]<br>
 
 -- compute modular power by using the quadratic sequence based on the least significant bit 
-of the exponent. If 0 accumulate b*b in b, if 1 accumulate b*r in r. The exp. 'e' is 
+of the exponent. If 0 accumulate b^2 in b, if 1 accumulate b*r in r. The exp. 'e' is 
 right shifted at each iteraction until it reaches 0 where the resul r is given back. 
 This function will be used also to find c and d exponents and to cipher / decipher.<br>
-powm :: Integer -> Integer -> Integer -> Integer -> Integer<br>
+<b>powm :: Integer -> Integer -> Integer -> Integer -> Integer<br>
 powm b 0 m r = r<br>
 powm b e m r<br>
-  | e `mod` 2 == 1 = powm (b * b `mod` m) (e `div` 2) m (r * b `mod` m)<br>
-powm b e m r = powm (b * b `mod` m) (e `div` 2) m r<br>
+nbsp;nbsp;  | e `mod` 2 == 1 = powm (b * b `mod` m) (e `div` 2) m (r * b `mod` m)<br>
+powm b e m r = powm (b * b `mod` m) (e `div` 2) m r<br></b>
 
 
 ### 2 Finding phi
