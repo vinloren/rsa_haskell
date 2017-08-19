@@ -130,6 +130,7 @@ And finally:
 (253 + 860) mod 860 = 253 (summed result to module since it may be negative)<br>
 <b>so 17^-1 mod 860 = 253 since (17*253) mod 860 = 1</b>
 
+### Haskell implementation
 The relevant functions in RsaKit.hs to manage all that was explained above are:<br>
 -- Extended euclidean algorithm. The result is a list of couples (q,r),(d,D) from (q,1),(D,d) up to 
 (q,r),(phi,c)<br>
@@ -153,7 +154,32 @@ works step by step until the list is void in which case we got the solution c * 
 invM a l r0 r1<br>
 <code>    </code> | l == (length(a)) = (invM a (l-4) (-(fst(a!!(l-2))) * (-1) * (fst((a!!(l-4))))+1) (-(fst(a!!(l-2)))))<br>
 <code>    </code> | l == 0 = ((r0 + (fst(a!!(length(a)-1)))) `mod` ((fst(a!!(length(a)-1)))))<br>
-<code>    </code> | otherwise = (invM a (l-2) (-(fst(a!!(l-2)))*r0+r1) r0)<br></b>
+<code>    </code> | otherwise = (invM a (l-2) (-(fst(a!!(l-2)))*r0+r1) r0)</b><br>
+
+## genRSA.hs
+This files contains the program that willpermit the creation of a set of a cipher pairs (public and private) 
+saving them in two files (pubkey.rsa and privkey.rsa) for eventual use. All the functions needed to 
+carry out the task are imported from module RsaKit.hs already discussed.
+
+The program will start asking the user to set the bit length of the two primes from which the key pair will 
+be created (usually 512 or 1024 bit length for each prime for a 1kb or 2kb module respectively) then the generation 
+process takes place following the steps:<br>
+
+1) pickig up a randomRIO(2^e, 2^(e+1)-1) odd integer p<br>
+2) pickig up a randomRIO(2^e, 2^(e+1)-1) odd integer q<br>
+3) let fact1 = findPrime p<br>
+<code>   </code>let fact2 = findPrime q<br>
+<code>   </code>let m = (fact1*fact2) -- m = module <br>
+<code>   </code>let phi = lcm (fact1-1) (fact2-1) <br>
+<code>   </code>let c = findC  -- c = cipher exp.<br>
+<code>   </code>let d = findD c phi<br>
+4) save module numbits,cipher exp.,module in file pubkey.rsa<br>
+5) save module numbits,decipher exp.,module in file privkey.rsa<br>
+
+
+### criFile.hs
+
+
 
 
 
