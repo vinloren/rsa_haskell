@@ -181,7 +181,14 @@ process takes place following the steps:<br>
 <br>
 
 ## criFile.hs
-This file permits cipher / decipher data files 
+This file permits cipher / decipher data files. It works from command line where 4 args are to be specified:<br>
+1) input filename<br>
+2) pubkey.rsa or privkey.rsa<br>
+3) output filename<br>
+4) cipher or deciph option<br>
+
+
+
 
 
 
