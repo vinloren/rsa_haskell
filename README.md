@@ -181,11 +181,34 @@ process takes place following the steps:<br>
 <br>
 
 ## criFile.hs
-This file permits cipher / decipher data files. It works from command line where 4 args are to be specified:<br>
+This file permits to cipher / decipher data files. It works from command line where 4 args are to be specified:<br>
 1) input filename<br>
 2) pubkey.rsa or privkey.rsa<br>
 3) output filename<br>
 4) cipher or deciph option<br>
+
+The first step, either in cipher or decipher mode, is to fetch module bits length, exponent, module from the 
+relevant key.rsa file. Those data are text lines terminated by \n each of them representing a integer.
+
+The first line is used to find the block length (bl=nbits/8 -1) for the input file to be read. This length will ensure 
+the corresponding integer, built reading a chunk of data 'bl' long , to be lower than the RSA module.
+The second line is saved in exp to be used for cipher / decipher, the third one is saved in 'module'.
+
+The second step is to fetch the input file saving it in a list of strings 'bl' long. This process is slightly 
+defferent in crypt versus decrypt. Lets take crypt:<br>
+ contents <- readFile (args!!0)<br>
+ handle <- openFile (args!!0) ReadMode<br>
+ cont <- hGetContents handle<br>
+ let aBlocks = getBlocks [[]] "" cont (fromInteger(len))<br>
+ 
+The function getBlocks is imported from module RsaKit.hs and works as follows:<br>
+<b>getBlocks :: [String] -> String -> String-> Int -> [String]<br>
+getBlocks ar s contents l <br>
+<code>  </code>| (length(contents)) == 0 = tail(ar)++(s:[])<br>
+<code>  </code>| (length(s)) == l = (getBlocks (ar++(s:[])) "" contents l)<br>
+<code>  </code>| otherwise = (getBlocks ar (s++(head(contents):[])) (tail(contents))  l)</b><br>
+  
+
 
 
 
