@@ -179,7 +179,7 @@ process takes place following the steps:<br>
 5) save module numbits,decipher exp.,module in file privkey.rsa<br>
 <br>
 <br>
-<br>
+
 ## criFile.hs
 This file permits cipher / decipher data files 
 
