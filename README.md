@@ -196,10 +196,10 @@ The second line is saved in exp to be used for cipher / decipher, the third one 
 
 The second step is to fetch the input file saving it in a list of strings 'bl' long. This process is slightly 
 defferent in crypt versus decrypt. Lets take crypt:<br>
- contents <- readFile (args!!0)<br>
+<b> contents <- readFile (args!!0)<br>
  handle <- openFile (args!!0) ReadMode<br>
  cont <- hGetContents handle<br>
- let aBlocks = getBlocks [[]] "" cont (fromInteger(len))<br>
+ let aBlocks = getBlocks [[]] "" cont (fromInteger(len))</b> -- len is = nbits/8 -1 i.e 127 for mod=1024 bits<br>
  
 The function getBlocks is imported from module RsaKit.hs and works as follows:<br>
 <b>getBlocks :: [String] -> String -> String-> Int -> [String]<br>
