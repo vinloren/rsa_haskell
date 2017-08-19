@@ -215,12 +215,13 @@ will provide a result as a list of strings corresponding to input 'cont'.
 Now this list of strings needs to be transformed in a list of integers corresponding to each string. The 
 function to achieve this is:<br>
 <b>let plain = [cnvIn x 0 | x <- aBlocks]</b> where cnvIn (imported from RsaKit.hs) is:<br>
-
 -- convert input string to Integer to cipher RSA<br>
-cnvIn :: [Char] -> Integer -> Integer<br>
+<b>cnvIn :: [Char] -> Integer -> Integer<br>
 cnvIn i n <br>
-<code>  </code| i == [] = n<br>
-<code>  </code| otherwise = (cnvIn (tail(i)) (intgr(ord(head(i))) n))<br>
+<code>  </code>| i == [] = n<br>
+<code>  </code>| otherwise = (cnvIn (tail(i)) (intgr(ord(head(i))) n))</b><br>
+
+
 
 
 
