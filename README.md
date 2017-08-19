@@ -167,14 +167,14 @@ The program will start asking the user to set the bit length of the two primes f
 be created (usually 512 or 1024 bit length for each prime for a 1kb or 2kb module respectively) then the generation 
 process takes place following the steps:<br>
 
-1) pickig up a randomRIO(2^e, 2^(e+1)-1) odd integer p<br>
-2) pickig up a randomRIO(2^e, 2^(e+1)-1) odd integer q<br>
+1) picking up a randomRIO(2^e, 2^(e+1)-1) odd integer p<br>
+2) picking up a randomRIO(2^e, 2^(e+1)-1) odd integer q<br>
 3) let fact1 = findPrime p<br>
-<code>   </code>let fact2 = findPrime q<br>
-<code>   </code>let m = (fact1*fact2) -- m = module <br>
-<code>   </code>let phi = lcm (fact1-1) (fact2-1) <br>
-<code>   </code>let c = findC  -- c = cipher exp.<br>
-<code>   </code>let d = findD c phi<br>
+   let fact2 = findPrime q<br>
+   let m = (fact1*fact2) -- m = module <br>
+   let phi = lcm (fact1-1) (fact2-1) <br>
+   let c = findC  -- c = cipher exp.<br>
+   let d = findD c phi<br>
 4) save module numbits,cipher exp.,module in file pubkey.rsa<br>
 5) save module numbits,decipher exp.,module in file privkey.rsa<br>
 <br>
