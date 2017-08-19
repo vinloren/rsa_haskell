@@ -195,7 +195,7 @@ the corresponding integer, built reading a chunk of data 'bl' long , to be lower
 The second line is saved in exp to be used for cipher / decipher, the third one is saved in 'module'.
 
 The second step is to fetch the input file saving it in a list of strings 'bl' long. This process is slightly 
-defferent in crypt versus decrypt. Lets take crypt:<br>
+different in crypt versus decrypt. Lets take crypt:<br>
 <b> contents <- readFile (args!!0)<br>
  handle <- openFile (args!!0) ReadMode<br>
  cont <- hGetContents handle<br>
@@ -208,7 +208,19 @@ getBlocks ar s contents l <br>
 <code>  </code>| (length(s)) == l = (getBlocks (ar++(s:[])) "" contents l)<br>
 <code>  </code>| otherwise = (getBlocks ar (s++(head(contents):[])) (tail(contents))  l)</b><br>
   
+'cont' contains the entire input file content as a string. This string has to be convertet in multiple strings 
+each one long 'len' bytes except the last one that will be likely shorter. The function getBlocks does 
+will provide a result as a list of strings corresponding to input 'cont'.
 
+Now this list of strings needs to be transformed in a list of integers corresponding to each string. The 
+function to achieve this is:<br>
+<b>let plain = [cnvIn x 0 | x <- aBlocks]</b> where cnvIn (imported from RsaKit.hs) is:<br>
+
+-- convert input string to Integer to cipher RSA<br>
+cnvIn :: [Char] -> Integer -> Integer<br>
+cnvIn i n <br>
+<code>  </code| i == [] = n<br>
+<code>  </code| otherwise = (cnvIn (tail(i)) (intgr(ord(head(i))) n))<br>
 
 
 
