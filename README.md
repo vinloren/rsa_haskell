@@ -155,7 +155,9 @@ invM a l r0 r1<br>
 <code>    </code> | l == (length(a)) = (invM a (l-4) (-(fst(a!!(l-2))) * (-1) * (fst((a!!(l-4))))+1) (-(fst(a!!(l-2)))))<br>
 <code>    </code> | l == 0 = ((r0 + (fst(a!!(length(a)-1)))) `mod` ((fst(a!!(length(a)-1)))))<br>
 <code>    </code> | otherwise = (invM a (l-2) (-(fst(a!!(l-2)))*r0+r1) r0)</b><br>
-
+<br>
+<br>
+<br>
 ## genRSA.hs
 This files contains the program that willpermit the creation of a set of a cipher pairs (public and private) 
 saving them in two files (pubkey.rsa and privkey.rsa) for eventual use. All the functions needed to 
@@ -175,10 +177,11 @@ process takes place following the steps:<br>
 <code>   </code>let d = findD c phi<br>
 4) save module numbits,cipher exp.,module in file pubkey.rsa<br>
 5) save module numbits,decipher exp.,module in file privkey.rsa<br>
-
-
-### criFile.hs
-
+<br>
+<br>
+<br>
+## criFile.hs
+This file permits cipher / decipher data files 
 
 
 
