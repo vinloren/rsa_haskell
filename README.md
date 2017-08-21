@@ -214,9 +214,9 @@ The most relevant function to get the original input back from the ciphered text
 cnvOut 0 a = a<br>
 cnvOut n a = cnvOut (n `div` 256) ((chr((fromInteger(n)) `mod` 256)):a)</b><br>
 It is actually the reverse process of cnvIn already shown. It is fairly self explanatory so I think it is not neccessary to spend more words.<br>
+<br>
+<br>
 
-<br>
-<br>
 ## criFile.hs
 This file permits to cipher / decipher data files. It works from command line where 4 args are to be specified:<br>
 1) input filename<br>
