@@ -6,7 +6,7 @@ C C++ Java Python Perl Ruby and many others are.
 Another aspect peculiar to haskell is the way it manages 'Integers' type: an Integer in haskell can have a virtually unlimited size so 
 there is no need of special libraries to manage big int numnbers such as those 1024 bit long or more.
 
-Wanting to learn haskell, the first project I thougth of was to implement myself a typical RSA kit in plain haskell as I did in the 
+Wanting to learn haskell, the first project I thought of was to implement myself a typical RSA kit in plain haskell as I did in the 
 past using C and MPIR libraries.
 
 
@@ -55,7 +55,7 @@ powm b e m r = powm (b * b `mod` m) (e `div` 2) m r<br></b>
 
 ### 2 Finding phi
 Actually this is done in genRSA.hs since it is there the only place where phi is required. 
-In is not eventually used anymore once 'c' and 'd' are found. The <b>let phi = lcm (fact1-1) (fact2-1)</b> is simple as such since Haskell already supplies the lcm function natively.
+In is not eventually used anymore once 'c' and 'd' are found. The <b>let phi = lcm (fact1-1) (fact2-1)</b> is simple as such since Haskell already supplies the lcm function nativly.
 
 ### 3 Choosing a 'cipher exponent' 
 Any small prime can be chosen as cipher exponent provided it is coprime with 'phi'. To find 'x' being coprime with phi to become cipher exponent 'c', a small list of primes suffices 
@@ -190,9 +190,9 @@ process takes place following the steps:<br>
  putStrLn (show cyph)</b><br>
 The sentence (it's length should be 1 byte less than module length) responded to the test prompt will be transformed in a 
 integer to be eventually ciphred:<br>
--- convert Int to Integer and sum it to 256*b<br>
+-- convert Int to Integer and sum it to 256 * b<br>
 <b>intgr :: Int -> Integer -> Integer<br>
-intgr a b = 256*b+toInteger(a)</b><br>
+intgr a b = 256 * b + toInteger(a)</b><br>
 
 -- convert input string to Integer to be ciphred RSA<br>
 <b>cnvIn :: [Char] -> Integer -> Integer<br>
