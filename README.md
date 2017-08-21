@@ -181,14 +181,15 @@ process takes place following the steps:<br>
 7) show the ciphered text then decipher to let the user verify the sentence to be identical to the one responded to the prompt.
 
 ### 6 cipher a sentence
-<b><code> putStrLn "Frase da cifrare?"
- n <- getLine
- let num = (cnvIn n 0)
- putStrLn (show(num))
- let cyph = powm num c (head m) 1
- putStrLn "Cypher ="
- putStrLn (show cyph)
-</code></b><br>
+<code> 
+ putStrLn "Frase da cifrare?"<br>
+ n <- getLine<br>
+ let num = (cnvIn n 0)<bt>
+ putStrLn (show(num))<br>
+ let cyph = powm num c (head m) 1<br>
+ putStrLn "Cypher ="<br>
+ putStrLn (show cyph)<br>
+</code><br>
 The sentence (it's length should be 1 byte less than module length) responded to the test prompt will be transformed in a 
 integer to be eventually ciphred:<br>
 -- convert Int to Integer and sum it to 256*b<br>
