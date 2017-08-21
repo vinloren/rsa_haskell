@@ -271,16 +271,27 @@ from an array of strings (the 'recs' list).<br>
 Now let's have a look at:<br>
 
 ### Decrypt
-The decipher process assumes to treat a input file consisting in text lines, terminating with \n, representin 
+The decipher process assumes to treat a input file consisting in text lines, terminating with \n, representing 
 Integers in string format. Since the record format is already set, there is no need to fetch the 'bits' line 
 from the privkey.rsa file:<br>
 <b>handle <- openFile (args!!1) ReadMode <br>
 contents <-hGetContents handle
 putStrLn ("key data:\n"++contents)
-let righe = lines contents
+let righe = lines contents<br>
 <code>    </code>ce = read'(righe!!1)<br>
 <code>    </code>mo = read'(righe!!2)<br>
 hClose handle</b><br>
+Now that exp. 'ce' and module 'mo' have been set, the input ciphered file can be read and deciphered:<br>
+<b>handle <- openFile (args!!0) ReadMode<br>
+contents <-hGetContents handle</b><br>
+1) <b>let incri = lines contents</b><br>
+2) <b>let cri = [ (read' x) | x <-incri]</b><br>
+3) <b>let decri =  [powm x ce mo 1 | x <- cri]</b><br>
+4) <b>let plain = [cnvOut x [] | x <- decri]</b><br>
+5) <b>let comp = cmpt (tail(plain)) (head(plain))</b><br>
+6) <b>putStrLn comp</b><br>
+7) <b>writeFile (args!!2) comp</b><br>
+
 
 
 
