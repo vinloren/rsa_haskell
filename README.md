@@ -292,6 +292,17 @@ Then:<br>
 5) <b>let comp = cmpt (tail(plain)) (head(plain))</b> -- finally the list 'plain' in compacted in a single string via 'cmpt' function<br>
 6) <b>putStrLn comp</b> -- the resulting plain text is shown at the console<br>
 7) <b>writeFile (args!!2) comp</b> -- then the plain text is saved in the output decipherd file.<br>
+The function <b>cnvOut</b> was already described in <b>genRSA.hs</b> while <b>read'</b> and <b>comp</b> is like this:<br>
+-- reads a numeric string and give it back as Integer. I renamed the haskell built in read in read' to get Integer instead of Int<br>
+<b>read' ::  String -> Integer<br>
+read' x = read x</b><br>
+-- builds a single output string from a list of strings. The result is gotten as the input array becomes void<br>
+<b>cmpt :: [String] -> String -> String<br>
+cmpt [] out = out<br>
+cmpt i out = cmpt (tail(i)) (out++head(i))</b><br>
+
+
+
 
 
 
