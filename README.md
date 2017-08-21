@@ -285,13 +285,13 @@ Now that exp. 'ce' and module 'mo' have been set, the input ciphered file can be
 <b>handle <- openFile (args!!0) ReadMode<br>
 contents <-hGetContents handle</b><br>
 Then:<br>
-1) <b>let incri = lines contents</b><br>
-2) <b>let cri = [ (read' x) | x <-incri]</b><br>
-3) <b>let decri =  [powm x ce mo 1 | x <- cri]</b><br>
-4) <b>let plain = [cnvOut x [] | x <- decri]</b><br>
-5) <b>let comp = cmpt (tail(plain)) (head(plain))</b><br>
-6) <b>putStrLn comp</b><br>
-7) <b>writeFile (args!!2) comp</b><br>
+1) <b>let incri = lines contents</b> -- funcion 'lines' (ex import Data.List) produces a list of strings from lines terminated by \n<br>
+2) <b>let cri = [ (read' x) | x <-incri]</b> -- read' translates list of string integers into integers in list 'cri'<br>
+3) <b>let decri =  [powm x ce mo 1 | x <- cri]</b> -- decri list will contain deciphered integers thanks to the function in list comprehension before the pipe<br>
+4) <b>let plain = [cnvOut x [] | x <- decri]</b> -- the list 'plain' will contain the plain text gotten by the function cnvOut inside the list comprehension before the pipe<br>
+5) <b>let comp = cmpt (tail(plain)) (head(plain))</b> -- finally the list 'plain' in compacted in a single string via 'cmpt' function<br>
+6) <b>putStrLn comp</b> -- the resulting plain text is shown at the console<br>
+7) <b>writeFile (args!!2) comp</b> -- then the plain text is saved in the output decipherd file.<br>
 
 
 
