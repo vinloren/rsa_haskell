@@ -233,7 +233,7 @@ The second line is saved in exp to be used for cipher / decipher, the third one 
 
 The second step is to fetch the input file saving it in a list of strings 'bl' long. This process is slightly 
 different in crypt versus decrypt. Lets take:<br>
-### crypt
+### Crypt
 <b> contents <- readFile (args!!0)<br>
  handle <- openFile (args!!0) ReadMode<br>
  cont <- hGetContents handle<br>
@@ -268,10 +268,21 @@ and finally:<br>
 <b>writeFile (args!!2) (unlines recs)</b> will actually write the data onto the output file. Note the 'unlines' function here 
 (being part of imported Data.List module) used to build e single string (written onto the output file) 
 from an array of strings (the 'recs' list).<br>
-<br>
-<br>
 Now let's have a look at:<br>
+
 ### Decrypt
+The decipher process assumes to treat a input file consisting in text lines, terminating with \n, representin 
+Integers in string format. Since the record format is already set, there is no need to fetch the 'bits' line 
+from the privkey.rsa file:<br>
+<b>handle <- openFile (args!!1) ReadMode <br>
+contents <-hGetContents handle
+putStrLn ("key data:\n"++contents)
+let righe = lines contents
+<code>    </code>ce = read'(righe!!1)<br>
+<code>    </code>mo = read'(righe!!2)<br>
+hClose handle</b><br>
+
+
 
 
 
