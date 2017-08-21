@@ -276,7 +276,7 @@ Integers in string format. Since the record format is already set, there is no n
 from the privkey.rsa file:<br>
 <b>handle <- openFile (args!!1) ReadMode <br>
 contents <-hGetContents handle
-putStrLn ("key data:\n"++contents)
+putStrLn ("key data:\n"++contents)<br>
 let righe = lines contents<br>
 <code>    </code>ce = read'(righe!!1)<br>
 <code>    </code>mo = read'(righe!!2)<br>
@@ -284,6 +284,7 @@ hClose handle</b><br>
 Now that exp. 'ce' and module 'mo' have been set, the input ciphered file can be read and deciphered:<br>
 <b>handle <- openFile (args!!0) ReadMode<br>
 contents <-hGetContents handle</b><br>
+Then:<br>
 1) <b>let incri = lines contents</b><br>
 2) <b>let cri = [ (read' x) | x <-incri]</b><br>
 3) <b>let decri =  [powm x ce mo 1 | x <- cri]</b><br>
