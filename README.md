@@ -232,7 +232,8 @@ the corresponding integer, built reading a chunk of data 'bl' long , to be lower
 The second line is saved in exp to be used for cipher / decipher, the third one is saved in 'module'.
 
 The second step is to fetch the input file saving it in a list of strings 'bl' long. This process is slightly 
-different in crypt versus decrypt. Lets take crypt:<br>
+different in crypt versus decrypt. Lets take:<br>
+### crypt
 <b> contents <- readFile (args!!0)<br>
  handle <- openFile (args!!0) ReadMode<br>
  cont <- hGetContents handle<br>
@@ -257,9 +258,9 @@ function to achieve this is:<br>
 cnvIn i n <br>
 <code>  </code>| i == [] = n<br>
 <code>  </code>| otherwise = (cnvIn (tail(i)) (intgr(ord(head(i))) n))</b><br>
-This function translated into Integer each string supplied (as already shown in genRSA.hs above), since the function is applied inside a list comprehension 
-the resutin list will consist in a list of integers corresponding to the original plain text. Now 
-all the list can be ciphered to obtain the ciphes text in a new list. The eventual function:<br>
+This function translates each string supplied (as already shown in genRSA.hs above) into Integer, since the function 
+is applied inside a list comprehension the resuting list will consist in a list of integers corresponding to the 
+original plain text. Now all the list can be ciphered to obtain the cipher text in a new list. The eventual function:<br>
 <b>let crypt = [powm x ce mo 1 | x <- plain]</b> will do the trick inside a list comprehension.<br>
 Then:<br>
 <b> let recs = [(show x) | x <- crypt] </b> will translate the list of Integers in list of strings<br>
@@ -267,6 +268,12 @@ and finally:<br>
 <b>writeFile (args!!2) (unlines recs)</b> will actually write the data onto the output file. Note the 'unlines' function here 
 (being part of imported Data.List module) used to build e single string (written onto the output file) 
 from an array of strings (the 'recs' list).<br>
+<br>
+<br>
+Now let's have a look at:<br>
+### Decrypt
+
+
 
 
 
