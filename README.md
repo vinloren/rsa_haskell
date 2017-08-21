@@ -181,6 +181,14 @@ process takes place following the steps:<br>
 7) show the ciphered text then decipher to let the user verify the sentence to be identical to the one responded to the prompt.
 
 ### 6 cipher a sentence
+<b><code> putStrLn "Frase da cifrare?"
+ n <- getLine
+ let num = (cnvIn n 0)
+ putStrLn (show(num))
+ let cyph = powm num c (head m) 1
+ putStrLn "Cypher ="
+ putStrLn (show cyph)
+</code></b><br>
 The sentence (it's length should be 1 byte less than module length) responded to the test prompt will be transformed in a 
 integer to be eventually ciphred:<br>
 -- convert Int to Integer and sum it to 256*b<br>
@@ -196,6 +204,7 @@ cnvIn i n <br>
 'n' left shifted 8 bits (initially = 0) so that the resulting integer is ready as 'i' has become void.<br>
 
 ### 7 decipher the output back
+Now the just ciphered text will be deciphered back to let the user verify that the whole RSA process is working fine.<br>
 
 <br>
 <br>
