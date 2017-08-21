@@ -217,7 +217,6 @@ It is actually the reverse process of cnvIn already shown. It is fairly self exp
 
 <br>
 <br>
-
 ## criFile.hs
 This file permits to cipher / decipher data files. It works from command line where 4 args are to be specified:<br>
 1) input filename<br>
@@ -258,6 +257,19 @@ function to achieve this is:<br>
 cnvIn i n <br>
 <code>  </code>| i == [] = n<br>
 <code>  </code>| otherwise = (cnvIn (tail(i)) (intgr(ord(head(i))) n))</b><br>
+This function translated into Integer each string supplied (as already shown in genRSA.hs above), since the function is applied inside a list comprehension 
+the resutin list will consist in a list of integers corresponding to the original plain text. Now 
+all the list can be ciphered to obtain the ciphes text in a new list. The eventual function:<br>
+<b>let crypt = [powm x ce mo 1 | x <- plain]</br> will do the trick inside a list comprehension.<br>
+Then:<br>
+<b>let recs = [(show x) | x <- crypt]</b> will translate the list of Integers in list of strings<br>
+and finally:<br>
+<b>writeFile (args!!2) (unlines recs)</b> will actually write the data onto the output file. Note the 'unlines' function here 
+(being part of imported Data.List module) used to build e single string (written onto the output file) 
+from an array of strings (the 'recs' list).<br>
+
+
+
 
 
 
