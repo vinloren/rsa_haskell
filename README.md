@@ -177,6 +177,26 @@ process takes place following the steps:<br>
    let d = findD c phi<br>
 4) save module numbits,cipher exp.,module in file pubkey.rsa<br>
 5) save module numbits,decipher exp.,module in file privkey.rsa<br>
+6) prompt the request for a sample sentence to be ciphred
+7) show the ciphered text then decipher to let the user verify the sentence to be identical to the one responded to the prompt.
+
+### 6 cipher a sentence
+The sentence (it's length should be 1 byte less than module length) responded to the test prompt will be transformed in a 
+integer to be eventually ciphred:<br>
+-- convert Int to Integer and sum it to 256*b<br>
+<b>intgr :: Int -> Integer -> Integer<br>
+intgr a b = 256*b+toInteger(a)</b><br>
+
+-- convert input string to Integer to be ciphred RSA<br>
+<b>cnvIn :: [Char] -> Integer -> Integer<br>
+cnvIn i n <br>
+<code>  </code>| i == [] = n<br>
+<code>  </code>| otherwise = (cnvIn (tail(i)) (intgr(ord(head(i))) n))</b><br>
+'i' is the input string, 'n' is the rsulting Integer. Each byte belonging to the string is summed up to 
+'n' left shifted 8 bits (initially = 0) so that the resulting integer is ready as 'i' has become void.<br>
+
+### 7 decipher the output back
+
 <br>
 <br>
 
