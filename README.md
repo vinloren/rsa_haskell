@@ -208,6 +208,12 @@ Now the just ciphered text will be deciphered back to let the user verify that t
   putStrLn "Decyph ="<br>
   putStrLn (show decy)<br>
   putStrLn (cnvOut decy [])</b><br>
+The most relevant function to get the original input back from the ciphered text here is <b>cnvOut decy []</b><br>
+-- converte big Integer in [char] to get the original plain text<br>
+<b>cnvOut :: Integer -> [Char] -> [Char]<br>
+cnvOut 0 a = a<br>
+cnvOut n a = cnvOut (n `div` 256) ((chr((fromInteger(n)) `mod` 256)):a)</b><br>
+It is actually the reverse process of cnvIn already shown. It is fairly self explanatory so I think it is not neccessary to spend more words.<br>
 
 <br>
 <br>
